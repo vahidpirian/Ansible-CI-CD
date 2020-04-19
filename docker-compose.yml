@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  ansible:
+    image: ansible
+    container_name: ansible
+    restart: unless-stopped
+    hostname: ansible
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - $PWD/Ansible:/var/jenkins_home/Ansible
+    networks:
+      - ans-net
+
+networks:
+  ans-net:
+
+volumes:
+  jenkins_home:
