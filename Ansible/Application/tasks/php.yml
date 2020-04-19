@@ -1,0 +1,33 @@
+---
+
+- name: Update
+  yum:
+    name: "*"
+    state: latest
+  tags: Update
+
+- name: Install epel-release
+  yum:
+    name=epel-release state=latest
+  tags: Install_epel_release
+
+- name: Installing the repository for php
+  yum:
+    name={{ item }} state=latest
+  with_items:
+    - yum-utils
+    - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+  tags: install_rep
+
+- name: Ensure that enabled remi repository
+  command: "{{ item }}"
+  with_items:
+    - "yum-config-manager --disable remi-php54"
+    - "yum-config-manager --enable remi-php72"
+  tags: run_command
+
+- name: Install php packages
+  yum:
+    name: [php, php-cli, php-curl, php-common, php-mysql, php-gd, php-xml, php-mbstring, unzip, vim, mariadb] 
+    state: latest
+  tags: Install_php

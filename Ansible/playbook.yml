@@ -1,0 +1,7 @@
+---
+- hosts: webserver
+  become: "true"
+  gather_facts: yes
+  become_method: sudo
+  roles:
+    - Application
