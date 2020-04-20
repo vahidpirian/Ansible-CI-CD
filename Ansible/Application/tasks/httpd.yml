@@ -14,10 +14,10 @@
 
 - name: Download and Extract CodeIgniter
   unarchive:
-    src: https://github.com/codeigniter4/framework/archive/v4.0.2.zip
+    src: https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/3.1.11
     dest: /var/www/html
     remote_src: yes
-  tags: Download_codeigniter
+  tags: Download_CodeIgniter
 
 - name: Change file owner
   file:
@@ -27,3 +27,23 @@
     recurse: yes
     mode: '0755'
   tags: Change_Owner
+
+- name: Rename the directory to codeigniter
+  command: "mv /var/www/html/bcit-ci-CodeIgniter-b73eb19 /var/www/html/CodeIgniter"
+  tags: Rename_Dir
+
+- name: Copy httpd.conf file
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf.d/codeigniter.conf
+  tags: Copy_File
+
+- name: Copy .htaccess file
+  copy:
+    src: htaccess
+    dest: /var/www/html/CodeIgniter/.htaccess
+    owner: apache
+    group: apache
+  tags: Copy_htaccess
+  notify: 
+    - Restart httpd
