@@ -47,3 +47,12 @@
   tags: Copy_htaccess
   notify: 
     - Restart httpd
+
+- name: Copy database.php
+  template:
+    src: database.php
+    dest: /var/www/html/CodeIgniter/application/config/database.php
+    owner: user
+    group: user
+  tags: Copy_Database
+  

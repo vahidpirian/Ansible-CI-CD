@@ -1,0 +1,53 @@
+---
+- name: Install mariadb packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mariadb-server
+    - MySQL-python
+  tags: Install_Mariadb
+
+- name: Start and Enable mariadb
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  tags: Start_Mariadb
+
+- name: Set password for root user
+  mysql_user:
+    name: root
+    password: "{{ password }}"
+    state: present
+    host: '%'
+    priv: CodeIgniter.*:ALL
+  tags: Set_Password
+
+- name: Copy my.cnf file
+  copy:
+    src: my.cnf
+    dest: /root/.my.cnf
+    owner: root
+    mode: '0600'
+  tags: Copy_My.cnf
+
+- name: Remove all extra users
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+  tags: Remove_Users
+
+- name: Create CodeIgniter Database
+  mysql_db:
+    name: CodeIgniter
+    state: present
+  tags: Create_Database
+
+#- name: Create User for Database
+#  mysql_user:
+#    name: user
+#    password: "{{ password }}"
+#    host: '%'
+#    priv: CodeIgniter.*:ALL

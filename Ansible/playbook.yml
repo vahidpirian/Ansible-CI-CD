@@ -5,3 +5,10 @@
   become_method: sudo
   roles:
     - Application
+
+- hosts: database
+  become: yes
+  gather_facts: yes
+  become_method: sudo
+  roles:
+    - Application
