@@ -1,0 +1,29 @@
+---
+- name: Install the httpd webserver
+  yum:
+    name: httpd
+    state: latest
+  tags: Install_httpd
+
+- name: Ensure that httpd started and enabled
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  tags: Start_httpd
+
+- name: Download and Extract CodeIgniter
+  unarchive:
+    src: https://github.com/codeigniter4/framework/archive/v4.0.2.zip
+    dest: /var/www/html
+    remote_src: yes
+  tags: Download_codeigniter
+
+- name: Change file owner
+  file:
+    path: /var/www/html
+    owner: apache
+    group: apache
+    recurse: yes
+    mode: '0755'
+  tags: Change_Owner
