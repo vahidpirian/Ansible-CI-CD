@@ -1,7 +1,0 @@
----
-
-- name: Restart mariadb
-  srevice:
-    name: mariadb
-    state: restarted
-  tags: Restart_Mariadb
