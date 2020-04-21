@@ -44,10 +44,5 @@
     name: CodeIgniter
     state: present
   tags: Create_Database
-
-#- name: Create User for Database
-#  mysql_user:
-#    name: user
-#    password: "{{ password }}"
-#    host: '%'
-#    priv: CodeIgniter.*:ALL
+  notify:
+    - Restart mariadb

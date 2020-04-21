@@ -11,4 +11,4 @@
   gather_facts: yes
   become_method: sudo
   roles:
-    - Application
+    - Database

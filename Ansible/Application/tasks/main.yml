@@ -2,4 +2,3 @@
 
 - include: php.yml
 - include: httpd.yml
-- include: mariadb.yml
